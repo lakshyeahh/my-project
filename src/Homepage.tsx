@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Home, Clock, Image, Heart, MessageCircleHeart, Sun, Settings, Bell, Calendar, Sparkles } from 'lucide-react'
+import { Clock, Image, Heart, MessageCircleHeart } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import pp from './assets/pp.png'
 

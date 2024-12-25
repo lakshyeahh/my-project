@@ -1,7 +1,6 @@
 'use client'
-
 import React, { useState, useCallback } from 'react'
-import { Camera, RefreshCw, Sparkles } from 'lucide-react'
+import { Camera, Sparkles } from 'lucide-react'
 import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -71,7 +70,7 @@ export default function ComplimentGenerator() {
           ))}
         </div>
       </div>
-      
+
       {isLoading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-pink-100">
           <div className="w-64 h-64 rounded-full overflow-hidden border-4 border-white shadow-lg">

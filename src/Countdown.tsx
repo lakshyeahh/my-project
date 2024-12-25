@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ChevronLeft, Calendar, Plus, X } from 'lucide-react'
+import { ChevronLeft, Plus, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { differenceInDays, format, isToday } from 'date-fns'
 import Confetti from 'react-confetti'

@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect } from 'react'
+
 import { useNavigate } from 'react-router-dom'
 import spline from './assets/spline.gif'
 

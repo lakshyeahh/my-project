@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bell, Settings } from 'lucide-react'
+
 
 export default function Header() {
   const [currentTime, setCurrentTime] = React.useState("9:41")

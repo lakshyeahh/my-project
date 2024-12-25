@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Home, Heart, MessageCircleHeart, Settings } from 'lucide-react'
 import { Link } from 'react-router-dom'
 

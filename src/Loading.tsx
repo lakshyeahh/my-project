@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import spline from './assets/spline.gif';
 
 export default function Loading() {

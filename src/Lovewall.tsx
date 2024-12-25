@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import  { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Heart } from 'lucide-react'
 import Confetti from 'react-confetti'
