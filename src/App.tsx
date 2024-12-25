@@ -5,7 +5,6 @@ import Countdown from './Countdown';
 import PhotoGallery from './PhotoGallery';
 import ComplimentGenerator from './Compliment';
 import LoveWall from './Lovewall';
-import SplashScreen from './SplashScreen';
 import MoodBooster from './MoodBooster';
 import EmailSettings from './EmailSettings';
 import PushNotifications from './PushNotifications';
@@ -54,12 +53,18 @@ const PageWithLoading = ({ children }: { children: React.ReactNode }) => {
 };
 
 function App() {
-  const handleFinished = () => {
-    return <Navigate to="/onboarding" replace />;
-  };
+  const [hasCompletedOnboarding, setHasCompletedOnboarding] = useState(false);
 
-  const handleFinishedOn = () => {
-    return <Navigate to="/homepage" replace />;
+  useEffect(() => {
+    // Check onboarding state from localStorage
+    const onboardingState = localStorage.getItem('hasCompletedOnboarding');
+    setHasCompletedOnboarding(onboardingState === 'true');
+  }, []);
+
+  const handleFinished = () => {
+    // Mark onboarding as completed
+    localStorage.setItem('hasCompletedOnboarding', 'true');
+    setHasCompletedOnboarding(true);
   };
 
   return (
@@ -67,17 +72,30 @@ function App() {
       <Layout>
         <PageWithLoading>
           <Routes>
+            {/* Default route: Redirect based on onboarding state */}
+            <Route
+              path="/"
+              element={
+                hasCompletedOnboarding ? (
+                  <Navigate to="/homepage" replace />
+                ) : (
+                  <Navigate to="/onboarding" replace />
+                )
+              }
+            />
             <Route path="/homepage" element={<Homepage />} />
             <Route path="/countdown" element={<Countdown />} />
             <Route path="/photo" element={<PhotoGallery />} />
             <Route path="/compliment" element={<ComplimentGenerator />} />
             <Route path="/wall" element={<LoveWall />} />
-            <Route path="/" element={<SplashScreen onFinished={handleFinished} />} />
             <Route path="/comingsoon" element={<ComingSoon onFinished={handleFinished} />} />
             <Route path="/mood" element={<MoodBooster />} />
             <Route path="/email" element={<EmailSettings />} />
             <Route path="/notifications" element={<PushNotifications />} />
-            <Route path="/onboarding" element={<OnboardingSlides onFinish={handleFinishedOn} />} />
+            <Route
+              path="/onboarding"
+              element={<OnboardingSlides onFinish={handleFinished} />}
+            />
           </Routes>
         </PageWithLoading>
       </Layout>
