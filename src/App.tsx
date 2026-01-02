@@ -12,6 +12,7 @@ import OnboardingSlides from './Onboarding';
 import Layout from './Layout';
 import ComingSoon from './Notifications';
 import spline from './assets/spline.gif';
+import SitWithMe from './SitWithMe';
 
 // Loading screen component
 const LoadingScreen = () => (
@@ -83,6 +84,7 @@ function App() {
                 )
               }
             />
+            <Route path="/sitwithme" element={<SitWithMe />} />
             <Route path="/homepage" element={<Homepage />} />
             <Route path="/countdown" element={<Countdown />} />
             <Route path="/photo" element={<PhotoGallery />} />

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Clock, Image, Heart, MessageCircleHeart } from 'lucide-react'
+import { Clock, Image, Heart, MessageCircleHeart, PauseIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import pp from './assets/pp.png'
 
@@ -151,13 +151,14 @@ export default function Component() {
                 count: '12 photos',
                 goto: '/mood'
               },
-              { 
-                icon: <Heart className="w-8 h-8" color="black" />, 
-                title: 'Notifications', 
-                bg: 'bg-gradient-to-br from-red-200 to-red-300',
-                count: 'Write now',
-                goto: '/comingsoon'
-              },
+             
+              {
+                icon: <PauseIcon className="w-6 h-6" color="black" />,
+                title: 'Sit With Me',
+                bg: 'bg-gradient-to-br from-green-500 to-green-300',
+                count: 'Just Pause',
+                goto: '/sitwithme'
+              }
             ].map((feature, index) => (
               <Link 
                 to={feature.goto || '/'}
