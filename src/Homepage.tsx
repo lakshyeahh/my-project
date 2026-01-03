@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Clock, Image, MessageCircleHeart, PauseIcon } from 'lucide-react'
+import { Clock, Image, MessageCircleHeart, Music, PauseIcon } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import pp from './assets/pp.png'
 
@@ -18,10 +18,71 @@ const affirmations = [
     "Success is not final, failure is not fatal: It is the courage to continue that counts.",
   ];
 
+  const FALLBACK_SONGS = [
+    { title: "Let Her Go", artist: "Passenger" },
+    { title: "Yellow", artist: "Coldplay" },
+    { title: "Perfect", artist: "Ed Sheeran" },
+    { title: "Until I Found You", artist: "Stephen Sanchez" },
+    { title: "Night Changes", artist: "One Direction" },
+  
+    { title: "All of Me", artist: "John Legend" },
+    { title: "Fix You", artist: "Coldplay" },
+    { title: "Photograph", artist: "Ed Sheeran" },
+    { title: "Say You Won’t Let Go", artist: "James Arthur" },
+    { title: "Someone You Loved", artist: "Lewis Capaldi" },
+  
+    { title: "I Wanna Be Yours", artist: "Arctic Monkeys" },
+    { title: "Sweater Weather", artist: "The Neighbourhood" },
+    { title: "Those Eyes", artist: "New West" },
+    { title: "Here With Me", artist: "d4vd" },
+    { title: "Line Without a Hook", artist: "Ricky Montgomery" },
+  
+    { title: "Heather", artist: "Conan Gray" },
+    { title: "Golden Hour", artist: "JVKE" },
+    { title: "You Are the Reason", artist: "Calum Scott" },
+    { title: "Shivers", artist: "Ed Sheeran" },
+    { title: "Love Someone", artist: "Lukas Graham" },
+  
+    { title: "Best Part", artist: "Daniel Caesar" },
+    { title: "Just the Way You Are", artist: "Bruno Mars" },
+    { title: "Ocean Eyes", artist: "Billie Eilish" },
+    { title: "The Night We Met", artist: "Lord Huron" },
+    { title: "Can’t Help Falling in Love", artist: "Elvis Presley" },
+  
+    { title: "Make You Feel My Love", artist: "Adele" },
+    { title: "Kiss Me", artist: "Sixpence None the Richer" },
+    { title: "Chasing Cars", artist: "Snow Patrol" }
+  ]
+
 export default function Component() {
   const [greeting, setGreeting] = useState("Hello, Gorgeous! 💖")
   const [currentTime, setCurrentTime] = useState("9:41")
+  const [song, setSong] = useState<{ title: string; artist: string } | null>(null)
 
+  const getRandomFallbackSong = () => {
+    return FALLBACK_SONGS[Math.floor(Math.random() * FALLBACK_SONGS.length)]
+  }
+
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0]
+    const key = "dailySong"
+  
+    // const stored = localStorage.getItem(key)
+    // if (stored) {
+    //   try {
+    //     const parsed = JSON.parse(stored)
+    //     if (parsed.date === today && parsed.song?.title && parsed.song?.artist) {
+    //       setSong(parsed.song)
+    //       return
+    //     }
+    //   } catch {}
+    // }
+  
+    // 👇 Try AI first, fallback if it fails
+    const fallback = getRandomFallbackSong()
+    setSong(fallback)
+    localStorage.setItem(key, JSON.stringify({ date: today, song: fallback }))
+  }, [])
   useEffect(() => {
     const updateGreeting = () => {
       const hour = new Date().getHours()
@@ -57,7 +118,20 @@ export default function Component() {
   // Get the affirmation for the current day
   const currentDay = getDayOfYear();
   const quote = affirmations[currentDay % affirmations.length];
+  const openAppleMusic = () => {
+    if (!song) {
+      alert("Still finding today’s song 🎧")
+      return
+    }
   
+    // setMusicLoading(true)
+  
+    const query = encodeURIComponent(`${song.title} ${song.artist}`)
+    const url = `https://music.apple.com/search?term=${query}`
+  
+    // 👇 PWA-safe, instant
+    window.location.href = url
+  }
   return (
     <div className="max-w-md mx-auto bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 min-h-screen relative overflow-hidden">
       {/* Animated background */}
@@ -105,6 +179,17 @@ export default function Component() {
             <h1 className="text-3xl font-caveat font-bold text-pink-800 animate-fadeIn">{greeting}</h1>
           </div>
         </div>
+        <button
+  onClick={openAppleMusic}
+  // disabled={musicLoading}
+  className="absolute top-6 right-6 w-14 h-14 rounded-full 
+             bg-white shadow-xl flex items-center justify-center
+             active:scale-95 transition animate-pulse
+             disabled:opacity-60 z-50"
+  aria-label="Play today’s song"
+>
+  <Music className="w-6 h-6 text-pink-600" />
+</button>
 
         {/* Quick Actions */}
        
